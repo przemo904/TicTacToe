@@ -26,7 +26,7 @@ namespace TicTacToe
     public partial class MainWindow : Window
     {
         public Player CurrentPlayer;
-        //public static string[,] Table = new string[4, 4];
+        
 
         public static int[,] Winners = new int[,]
         {
@@ -63,7 +63,7 @@ namespace TicTacToe
                     bt.Content = "O";
                 }
 
-                //SetInTable();
+                
                CheckVictory();
                ChangePlayer();
             }
@@ -88,28 +88,79 @@ namespace TicTacToe
 
         public void CheckVictory()
         {
+            
+            var btab = FindButtons<Button>(Root).ToArray();
 
-            var tab = FindButtons<Button>(Root).ToArray();
+
+            List<Button> list = new List<Button>();
+            for (int i = 1; i < 12; i++)
+            {
+                if (i % 4 == 0) continue;
+                list.Add(btab[i - 1]);
+            }
+
+            Check(list);
+
+
+            List<Button> list1 = new List<Button>();
+            for (int i = 1; i < 12; i++)
+            {
+                if (i % 4 == 0) continue;
+                list1.Add(btab[i]);
+            }
+
+            Check(list1);
+
+
+            List<Button> list2 = new List<Button>();
+            for (int i = 1; i < 12; i++)
+            {
+                if (i % 4 == 0) continue;
+                list2.Add(btab[i+3]);
+            }
+
+            Check(list2);
+
+            List<Button> list3 = new List<Button>();
+            for (int i = 1; i < 12; i++)
+            {
+                if (i % 4 == 0) continue;
+                list3.Add(btab[i+4]);
+            }
+
+            Check(list3);
+
+        }
+
+
+        public void Check(List<Button> list) {
+
+           
 
             for (int i = 0; i < 8; i++)
             {
+                int a = Winners[i, 0];
+                int b = Winners[i, 1];
+                int c = Winners[i, 2];
 
+                Button b1 = list[a];
+                Button b2 = list[b];
+                Button b3 = list[c];
 
-            }
-        }
+                if (b1.Content == null || b2.Content == null || b3.Content == null) continue;
 
-        /*private void SetInTable() {
-            int i = 0;
-            var tab = FindButtons<Button>(Root).ToArray();
-            for (int x = 0; x < 4; x++)
-            {
-                for (int y = 0; y < 4; y++) {
-                    Table[x, y] = tab[i].ToString() ;
-                    i++;
+                if (b1.Content == b2.Content && b2.Content == b3.Content)
+                {
+
+                    WinnersGrid.Visibility = Visibility.Visible;
+                    WinText.Text = CurrentPlayer + " Wygrywa";
+                    return;
                 }
             }
-        }*/
 
+        }
+
+      
         private void PlayerClick(object sender, RoutedEventArgs e) {
             var bt = (ToggleButton)sender;
             if (bt.Content.ToString() == "X") {
@@ -162,11 +213,8 @@ namespace TicTacToe
                     {
                         yield return childOfChild;
                     }
-
                 }
             }
-
-
         }
 
 
