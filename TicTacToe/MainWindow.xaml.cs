@@ -207,21 +207,13 @@ namespace TicTacToe
 
         }
 
-
-
-
-
-
-        public static IEnumerable<T> FindButtons<T>(DependencyObject root) where T : DependencyObject
-        {
+        public static IEnumerable<T> FindButtons<T>(DependencyObject root) where T : DependencyObject {
             if (root != null)
             {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++)
-                    {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++) {
                     DependencyObject child = VisualTreeHelper.GetChild(root, i);
                     if (child != null && child is T )
                     {
-
                         yield return (T)child;
                     }
                     foreach (T childOfChild in FindButtons<T>(child))
@@ -231,8 +223,6 @@ namespace TicTacToe
                 }
             }
         }
-
-
 
     }
 }
