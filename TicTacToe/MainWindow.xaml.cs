@@ -26,7 +26,7 @@ namespace TicTacToe
     public partial class MainWindow : Window
     {
         public Player CurrentPlayer;
-        
+        int count = 0;
 
         public static int[,] Winners = new int[,]
         {
@@ -63,7 +63,7 @@ namespace TicTacToe
                     bt.Content = "O";
                 }
 
-                
+                count++;
                CheckVictory();
                ChangePlayer();
             }
@@ -79,7 +79,6 @@ namespace TicTacToe
             else {
                 CurrentPlayer = Player.X;
                 ToggleX();
-
 
             }
 
@@ -158,6 +157,13 @@ namespace TicTacToe
                 }
             }
 
+            if (count == 16) {
+                WinnersGrid.Visibility = Visibility.Visible;
+                WinText.Text = " Remis ";
+                return;
+
+            }
+
         }
 
       
@@ -188,7 +194,16 @@ namespace TicTacToe
 
         private void ReplayClick(object sender, RoutedEventArgs e)
         {
-            
+            var tab = FindButtons<Button>(Root).ToArray();
+
+            WinnersGrid.Visibility = Visibility.Collapsed;
+
+            for (int i = 0; i < 16; i++) {
+                tab[i].Content = null;
+
+            }
+
+            CurrentPlayer = Player.O;
 
         }
 
